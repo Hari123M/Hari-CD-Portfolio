@@ -1,0 +1,244 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-window: var(--window);
+  --color-window-deep: var(--window-deep);
+  --color-sky: var(--sky);
+
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-pixel: "VT323", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0rem;
+  /* paper white + near-black ink */
+  --background: oklch(0.994 0 0);
+  --foreground: oklch(0.2 0.006 20);
+  --card: oklch(0.994 0 0);
+  --card-foreground: oklch(0.2 0.006 20);
+  --popover: oklch(0.994 0 0);
+  --popover-foreground: oklch(0.2 0.006 20);
+  /* ink as primary action */
+  --primary: oklch(0.2 0.006 20);
+  --primary-foreground: oklch(0.994 0 0);
+  /* terminal mint-green desktop */
+  --accent: oklch(0.84 0.1 158);
+  --accent-foreground: oklch(0.22 0.03 165);
+  /* deep green signal tag */
+  --signal: oklch(0.52 0.12 160);
+  --signal-foreground: oklch(0.994 0 0);
+  --secondary: oklch(0.9 0 0);
+  --secondary-foreground: oklch(0.2 0.006 20);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.45 0.006 20);
+  --window: oklch(0.9 0 0);
+  --window-deep: oklch(0.8 0 0);
+  --sky: oklch(0.4 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.994 0 0);
+  --border: oklch(0.2 0.006 20);
+  --input: oklch(0.2 0.006 20);
+  --ring: oklch(0.52 0.12 160);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-signal-foreground);
+  }
+}
+
+/* Giant grotesk headlines */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.86;
+}
+
+/* Dot-matrix halftone field */
+@utility halftone {
+  background-color: var(--color-accent);
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-foreground) 55%, transparent) 0.8px,
+    transparent 1.1px
+  );
+  background-size: 5px 5px;
+}
+
+@utility halftone-dense {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-foreground) 80%, transparent) 1.2px,
+    transparent 1.6px
+  );
+  background-size: 4px 4px;
+}
+
+/* Grey-to-black hero sky, like an old boot screen */
+@utility boot-sky {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--color-sky) 100%, transparent),
+    var(--color-foreground)
+  );
+}
+
+/* Retro OS window */
+@utility os-window {
+  background: var(--color-window);
+  border: 2px solid var(--color-foreground);
+  box-shadow:
+    inset 2px 2px 0 var(--color-background),
+    inset -2px -2px 0 var(--color-window-deep),
+    4px 4px 0 var(--color-foreground);
+}
+
+@utility os-title {
+  background: var(--color-foreground);
+  color: var(--color-background);
+  font-family: var(--font-pixel);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0.2rem 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+@utility pixel {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.02em;
+}
+
+/* crop marks for statement blocks */
+@utility crop {
+  position: relative;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: currentColor;
+    border-style: solid;
+    opacity: 0.8;
+  }
+  &::before {
+    top: 0;
+    left: 0;
+    border-width: 1px 0 0 1px;
+  }
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 1px 1px 0;
+  }
+}
+
+@utility link-bar {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 0.08em;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  &:hover {
+    background-size: 100% 0.5em;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@utility caret {
+  animation: blink 1s steps(1) infinite;
+}
+@utility bar-grow {
+  transform-origin: left;
+  animation: grow 1.2s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@utility rise {
+  animation: rise 0.8s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@utility typed {
+  animation: type 0.9s steps(28) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
